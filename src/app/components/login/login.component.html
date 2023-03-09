@@ -1,0 +1,75 @@
+<div class="app">
+    <div class="row no-gutters">
+        <div class="col-md-12 mx-auto p-0">
+            <div class="card">
+                <div class="login-box">
+                    <div class="login-snip"> <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Login</label> <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+                        <div class="login-space">
+                            <div class="login">
+                                <div class="group"> <label for="user" class="label form-label">Username</label> <input [(ngModel)]="userLogin" type="text" class="input" placeholder="Enter your username"> </div>
+                                <div class="group"> <label for="pass" class="label form-label">Password</label> <input [(ngModel)]="passLogin" type="password" class="input" data-type="password" placeholder="Enter your password"> </div>
+                                <div class="group"> <input type="submit" class="button" id="liveToastBtn" value="Sign In" (click)="click()"> </div>
+                                <div class="hr"></div>
+                                <div class="foot"> <a href="#">Forgot Password?</a> </div>
+                            </div>
+                            <div class="sign-up-form">
+                                <div class="group"> <label for="user" class="label form-label">Username</label> <input [(ngModel)]="userSign" id="user" type="text" class="input" placeholder="Create your Username"> </div>
+                                <div class="group"> <label for="pass" class="label form-label">Password</label> <input [(ngModel)]="passSign" id="pass" type="password" class="input" data-type="password" placeholder="Create your password"> </div>
+                                <div class="group"> <label for="pass" class="label form-label">Repeat Password</label> <input [(ngModel)]="passRepeat" id="pass" type="password" class="input" data-type="password" placeholder="Repeat your password"> </div>
+                                <div class="group"> <input type="submit" class="button" value="Sign Up" id="liveToastBtn3" (click)="SignUp()"> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+            Usuario no válido o contraseña incorrecta
+            </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    </div>
+
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="liveToast2" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                No hay conexión con la base de datos
+                </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="liveToast4" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                La contraseña no coincide
+                </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="liveToast3" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+            Usuario creado correctamente
+            </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    </div>
+  </div>
+
+  
+
+

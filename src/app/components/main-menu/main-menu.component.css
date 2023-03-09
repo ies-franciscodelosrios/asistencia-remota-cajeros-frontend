@@ -1,0 +1,209 @@
+.col-3 {
+    background-color: rgb(5,72,71);
+    height: 100vh;
+}
+
+.col-9 {
+    background-color: rgb(5,72,71);
+}
+
+.call {
+    width: 70%;
+    font-size: 13px;
+    color: white;
+}
+
+.btn {
+    width: 100%;
+    font-size: 12px;
+    height: 30px;
+}
+
+.table {
+    border-bottom: transparent !important;
+}
+
+td {
+    padding-top: 5% !important;
+}
+
+#video-wrapper {
+	text-align: center;
+    background-color: #343434;
+}
+
+#remote-video {
+	height: 99vh;
+}
+
+#local-video {
+    position: absolute;
+    right: 30%;
+	bottom: 1rem;
+	width: 9vw;
+	height: 9vw;
+    margin-right: 1%;
+	border: 3px solid white;
+	border-radius: 4px;
+}
+
+#boton {
+    z-index: 0;
+    background-color: rgba(209, 22, 22, 0.37) !important;
+    height: 75px;
+    width: 75px;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    margin-left: 25%;
+    margin-bottom: 3%;
+}
+
+#boton2 {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    margin-left: 8%;
+    margin-bottom: 3%;
+}
+
+#close {
+    border: transparent;
+    background-color: transparent !important;
+    width: 1%;
+}
+
+#full {
+    border: transparent;
+    background-color: transparent !important;
+    width: 1%;
+}
+
+#min {
+    border: transparent;
+    background-color: transparent !important;
+    width: 1%;
+}
+
+#row-width {
+    margin-left: 70%;
+}
+
+#col-width {
+    max-width: 25%;
+}
+
+/*MODAL*/
+  
+  #dragable_modal {
+    position: relative;
+  }
+  
+
+  
+  #staticBackdrop .modal-content {
+    /* padding: 20px; */
+    height: 400px;
+    overflow: hidden;
+    resize: both;
+    width: 500px;
+  }
+  
+.dragable_touch{
+    cursor: move;
+}
+
+.modal-header {
+    height: 10%;
+    background-color: rgb(5,72,71);
+}
+
+.div1 {
+    height: 20%;
+}
+
+.div2 {
+    height: 75%;
+}
+
+.accordion-item {
+    background-color:transparent !important;
+}
+
+.accordion-body {
+    background-color: transparent;
+    text-align: center;
+  }
+  
+.accordion-item {
+   --bs-accordion-border-color: transparent;
+  }
+  
+.accordion {
+   --bs-accordion-active-bg: transparent;
+  }
+  
+.accordion {
+    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem transparent;
+}
+
+.accordion-button {
+    color: white !important;
+}
+
+.accordion-button.collapsed {
+    background: transparent;
+}
+
+.accordion-button:after {
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+}
+
+.list-group-item {
+    background-color: transparent !important;
+    border: none;
+}
+
+.call {
+    color: white;
+    font-size: 16px;
+    
+}
+
+#InCallBack {
+    background-color: rgba(255, 0, 0, 0.336);
+    height: 50px;
+    border-radius: 30px;
+}
+
+.InCallFont {
+    color: white;
+    font-size: 18px;
+}
+
+.NoCallFont {
+    color: white;
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+#ButtonInCall {
+    border-radius: 30px !important;
+}
+
+#spinner {
+    display: none; 
+    z-index: 9999;
+}
+
+.btn-disabled {
+    background-color: #ffcc00;
+}
+
+.button-wrapper {
+    cursor: not-allowed;
+}

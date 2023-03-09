@@ -1,0 +1,156 @@
+<div id="spinner" class="position-absolute top-50 start-50 translate-middle">
+  <div class="spinner-border text-success" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+<div class="row">
+    <div class="col-9">
+        <div class="col text-center">
+            <div id="video-wrapper">
+              <video #remoteVideo id="remote-video" poster="./assets/video-placeholder.jpg" autoplay playsinline></video>
+              <div class="container text-center">
+                <div class="row">
+                  <div id="hang" class="col">
+                    <button *ngIf="showButton" id="boton" type="button" class="btn btn-outline-danger" (click)="endCall()">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-telephone-x-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511zm9.261 1.135a.5.5 0 0 1 .708 0L13 2.793l1.146-1.147a.5.5 0 0 1 .708.708L13.707 3.5l1.147 1.146a.5.5 0 0 1-.708.708L13 4.207l-1.146 1.147a.5.5 0 0 1-.708-.708L12.293 3.5l-1.147-1.146a.5.5 0 0 1 0-.708z"></path>
+                    </svg>
+                    </button>
+                  </div>
+                  <div class="col">
+                    <button *ngIf="showButton" id="boton2" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="vnc();">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pc-display-horizontal" viewBox="0 0 16 16">
+                      <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5v7A1.5 1.5 0 0 0 1.5 10H6v1H1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-5v-1h4.5A1.5 1.5 0 0 0 16 8.5v-7A1.5 1.5 0 0 0 14.5 0h-13Zm0 1h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5ZM12 12.5a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0Zm2 0a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0ZM1.5 12h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1ZM1 14.25a.25.25 0 0 1 .25-.25h5.5a.25.25 0 1 1 0 .5h-5.5a.25.25 0 0 1-.25-.25Z"></path>
+                      </svg>
+                    </button>
+                  </div>
+                  <div class="col">
+                    <video *ngIf="showLocalVideo" #localVideo id="local-video" autoplay playsinline [muted]=true></video>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+      <div class="div1">
+        <div class="accordion" id="accordionExample1">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne1" aria-expanded="true" aria-controls="collapseOne1">
+                LLAMADA EN CURSO
+              </button>
+            </h2>
+            <div id="collapseOne1" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample1">
+              <div class="accordion-body">
+                <div class="InCall">
+                  <div class="container text-center">
+                    <div *ngIf="showCall" id="InCallBack" class="row align-items-center">
+                      <div class="col">
+                        <span class="InCallFont"> Cajero {{id}} </span>
+                      </div>
+                      <div class="col">
+                        <button id="ButtonInCall" type="button" class="btn btn-danger">En Curso</button>
+                      </div>
+                    </div>
+                    <div *ngIf="!showCall" id="InCallBack" class="row align-items-center"> 
+                      <div class="col">
+                        <span class="NoCallFont"> NO HAY LLAMADA EN CURSO </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="div2">
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne2" aria-expanded="true" aria-controls="collapseOne2 ">
+                LISTA DE LLAMADAS
+              </button>
+            </h2>
+            <div id="collapseOne2" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <ul class="list-group">
+                  <li *ngFor="let Call of this.signal.data" class="list-group-item"> <span class="call"> Cajero {{Call.cajeroId}} solicita videollamada </span>
+                    <div [ngClass]="{'button-wrapper': callButton}"> 
+                    <button [ngClass]="{'btn-disabled': callButton}" [disabled]="callButton" type="button" class="btn btn-success" (click)="update(Call)">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"></path>
+                      </svg>
+                    </button>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--
+        <table *ngFor="let Call of this.signal.data" class="table">
+            <tbody>
+              <tr>
+                <td class="call"> Cajero {{Call.cajeroId}} solicita videollamada </td>
+                <td><button type="button" class="btn btn-success" (click)="update(Call)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"></path>
+                    </svg>
+                  </button>
+            </td>
+              </tr>
+            </tbody>
+          </table>
+      -->
+    </div>
+</div>
+<!--Modal for VNC -->
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" Dragable>
+  <div class="modal-dialog" >
+    <div class="modal-content" maximize #maximize="maximize" >
+      <div class="modal-header dragable_touch" DragableHandler>
+        <div class="container text-center">
+          <div id="row-width" class="row">
+            <div id="col-width" class="col">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
+            </div>
+            <div id="col-width" class="col">
+              <button id="min" type="button" class="btn btn-success" (click)="maximize.minimize()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="yellow" class="bi bi-dash-circle-fill" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"></path>
+              </svg>
+              </button>
+            </div>
+            <div id="col-width" class="col">
+              <button id="full" type="button" class="btn btn-success" (click)="maximize.maximize()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-fullscreen" viewBox="0 0 16 16">
+                <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1h-4zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5z"></path>
+                </svg>
+              </button>
+            </div>
+            <div id="col-width" class="col">
+              <button id="close" type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" aria-label="Close" (click)="closevnc()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <app-remote></app-remote>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
