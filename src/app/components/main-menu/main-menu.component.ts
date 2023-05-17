@@ -43,6 +43,9 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   callDuration: number;
   private timer$ = interval(1000);
   private destroy$ = new Subject();
+  itemsPerPage = 4; // Número de elementos por página
+  currentPage = 1; // Página actual
+  displayedItems: any[] = [];
 
   @ViewChild('localVideo')
   localVideo!: ElementRef<HTMLVideoElement>;
@@ -226,13 +229,42 @@ export class MainMenuComponent implements OnInit, OnDestroy {
         });
       if (data.length == 0) {
         this.noHistory = true;
+      } else {
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        this.displayedItems = this.CallHistory.slice(startIndex, endIndex);
       }
       },
       error => {
         console.log(error);
       }
     );
+  }
 
+  /**
+   * Metodo que divide la lista completa para hacer la paginación y mostrar la lista de 4 en 4
+   */
+  updateDisplayedItems() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.displayedItems = this.CallHistory.slice(startIndex, endIndex);
+  }
+
+  /**
+   * 
+   * @returns las páginas para mostrarlas en la paginación
+   */
+  getPages(): number[] {
+    const totalPages = this.getTotalPages();
+    return Array(totalPages).fill(0).map((_, index) => index + 1);
+  }
+  
+  /**
+   * 
+   * @returns páginas totales de la lista para ir cambiando y mostrar los siguientes resultados
+   */
+  getTotalPages(): number {
+    return Math.ceil(this.CallHistory.length / this.itemsPerPage);
   }
 
   /**

@@ -311,3 +311,43 @@ td {
     margin-top: 5%;
     margin-right: 10%;
 }
+
+.nav {
+    justify-content: center;
+    margin-top: 18%;
+    margin-left: 2%;
+    cursor: pointer;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .page-item {
+    margin-right: 5px;
+  }
+  
+  .page-item.disabled .page-link,
+  .page-item.active .page-link {
+    color: #fff;
+    background-color: #68829E;
+    border-color: #68829E;
+  }
+  
+  .page-item .page-link {
+    color: #68829E;
+    background-color: #fff;
+    border: 1px solid #68829E;
+    padding: 6px 10px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .page-item .page-link:hover {
+    background-color: #68829E;
+    color: #fff;
+    text-decoration: none;
+  }

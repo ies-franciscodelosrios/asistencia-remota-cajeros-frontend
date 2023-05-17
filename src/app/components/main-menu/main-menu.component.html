@@ -142,8 +142,9 @@
               <div class="accordion-body">
                 <ul class="list-group">
                   <div class="row">
-                    <li *ngFor="let Call of this.CallHistory" class="list-group-item">
+                    <li *ngFor="let Call of this.displayedItems" class="list-group-item">
                       <span class="callHistory"> Cajero {{Call.cajeroId}} - {{Call.formatted}} </span>
+                      <img src="./assets/info.png" alt="Usuario" width="30px" height="30px">
                       <div id="historyDiv" class="col-2">
                         <div class="d-flex justify-content-center">
                           <span class="ratingHistoryFont"> {{Call.rating}} </span>
@@ -151,6 +152,19 @@
                         </div>
                       </div>
                     </li>
+                    <nav class="nav">
+                      <ul class="pagination">
+                        <li class="page-item" [class.disabled]="currentPage === 1">
+                          <a class="page-link" (click)="currentPage = currentPage - 1; updateDisplayedItems()">Anterior</a>
+                        </li>
+                        <li class="page-item" *ngFor="let pageNumber of getPages()" [class.active]="pageNumber === currentPage">
+                          <a class="page-link" (click)="currentPage = pageNumber; updateDisplayedItems()" *ngIf="pageNumber === currentPage">{{ pageNumber }}</a>
+                        </li>
+                        <li class="page-item" [class.disabled]="currentPage === getTotalPages()">
+                          <a class="page-link" (click)="currentPage = currentPage + 1; updateDisplayedItems()">Siguiente</a>
+                        </li>
+                      </ul>
+                    </nav>
                   </div>
                 </ul>
               </div>
