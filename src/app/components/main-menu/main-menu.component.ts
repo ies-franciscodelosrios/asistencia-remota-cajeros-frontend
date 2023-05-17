@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import { CallService } from 'src/app/services/call.service';
 import { RemoteComponent } from '../remote/remote';
@@ -11,6 +11,10 @@ import { SignalrService } from 'src/app/services/signalr.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { CajeroService } from 'src/app/services/cajero.service';
 import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
+import { interval } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 declare var bootstrap: any;
 
@@ -22,12 +26,23 @@ declare var bootstrap: any;
 export class MainMenuComponent implements OnInit, OnDestroy {
   public isCallStarted$: Observable<boolean>;
   public Call:Call[];
+  public CallHistory:Call[];
   showCall:boolean = false;
   showButton:boolean = false;
   showLocalVideo:boolean = false;
+  noHistory:boolean = false;
   callButton:boolean = false;
+  history:boolean = true;
+  closeHistory:boolean = false;
+  showHistory:boolean = true;
   id:number = null;
+  note:number = 0;
+  Username:string = null;
   private tooltipList = new Array<any>();
+  callStartTime: number;
+  callDuration: number;
+  private timer$ = interval(1000);
+  private destroy$ = new Subject();
 
   @ViewChild('localVideo')
   localVideo!: ElementRef<HTMLVideoElement>;
@@ -40,7 +55,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   @ViewChild('mySpan') mySpan: HTMLSpanElement;
 
   constructor(public dialog: MatDialog, private callService: CallService, private readonly http:CallBDService, private readonly http2:UserService, public signal:SignalrService,
-    private local:LocalStorageService, public cajeroService : CajeroService) { 
+    private local:LocalStorageService, public cajeroService : CajeroService, private router:Router, private datePipe: DatePipe) { 
     this.isCallStarted$ = this.callService.isCallStarted$;
   }
 
@@ -58,6 +73,8 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     //const spinner = document.getElementById('spinner');
     //spinner.style.display = 'block';
+    this.note = this.local.getUser().note;
+    this.Username = this.local.getUser().username;
     try{
       this.callService.initPeer();
       await this.signal.startConnection();  //conexión
@@ -95,7 +112,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
       }
     );
     */
-   this.videocall.connect('172.16.16.131','','headless');
+   this.videocall.connect('192.168.10.238','','headless');
   }
 
   /**
@@ -111,13 +128,17 @@ export class MainMenuComponent implements OnInit, OnDestroy {
    * Destruimos el peer y creamos uno nuevo para la siguiente conexion peer to peer
    */
   public endCall() {
-    this.callService.destroyPeer();
-    this.callService.initPeer();
+    //this.callService.destroyPeer();
+    //this.callService.initPeer();
+    this.destroy$.next();
+    this.destroy$.complete();
     this.callButton = false;
     this.showButton = false;
     this.showCall = false;
     this.showLocalVideo = false;
     this.http.callIn.estado = 2;
+    /*
+    this.http.callIn.duration = this.callDuration;
     this.http.updateCall(this.http.callIn.id,this.http.callIn).subscribe(
       data => {
         console.log("EXITO")
@@ -126,7 +147,14 @@ export class MainMenuComponent implements OnInit, OnDestroy {
         console.log(error)
       }
     );
+    */
     this.remoteVideo.nativeElement.srcObject=undefined;
+
+    // --> codigo para incluir en la página de sergio para poner el tiempo estimado en minutos y segundos junto con el numero de cola
+    //const minutos = Math.floor(this.callDuration);
+    //const segundos = Math.round((this.callDuration - minutos) * 60);
+    //const tiempoFormateado = `${minutos} minuto${minutos !== 1 ? 's' : ''} y ${segundos} segundo${segundos !== 1 ? 's' : ''}`;
+    //console.log(tiempoFormateado);
   }
 
   /**
@@ -141,6 +169,16 @@ export class MainMenuComponent implements OnInit, OnDestroy {
     const user = this.local.getUser();
     Call.estado = 1;
     Call.userId = user.id;
+    /*
+    this.callStartTime = Date.now();
+    this.timer$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        const seconds = Math.floor((Date.now() - this.callStartTime) / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        this.callDuration = parseFloat(`${minutes}.${remainingSeconds}`);
+      });
     this.http.updateCall(Call.id, Call).subscribe(
       data => {
         console.log("EXITO")
@@ -149,13 +187,62 @@ export class MainMenuComponent implements OnInit, OnDestroy {
         console.log(error)
       }
     );
+    */
     this.showCall = true;
     this.id = Call.cajeroId;
+    /*
     this.callService.establishMediaCall(Call.p2p,()=>{
       this.endCall();
     });
+    */
     this.http.callIn = Call;
     this.CloseAccordion("collapseOne2");
+  }
+
+  /**
+   * Método para cerrar sesión que elimina el usuario del Local Storage y navega
+   * hacia el Login
+   */
+  public logout() {
+    const user = this.local.getUser();
+    this.local.delete(user.id);
+    this.router.navigate(['/login']);
+  }
+
+  /**
+   * Método para ver el historial de llamadas atendidas por ese usuario junto a su rating
+   */
+  public historyButton() {
+    const user = this.local.getUser();
+    this.history = false;
+    this.closeHistory = true;
+    this.showHistory = false;
+    this.http.getAllCallsByUser(user.id).subscribe(
+      data => {
+        this.CallHistory = data.map(item => {
+          const fechaFormateada = this.datePipe.transform(item.date, 'dd/MM/yyyy');
+          item.formatted = fechaFormateada
+          return item;
+        });
+      if (data.length == 0) {
+        this.noHistory = true;
+      }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
+  }
+
+  /**
+   * Metodo para cerrar el accordion del historial de llamadas y volver
+   * a ver la lista de llamadas para atender las solicitudes
+   */
+  public closeH() {
+    this.history = true;
+    this.closeHistory = false;
+    this.showHistory = true;
   }
 
   /**

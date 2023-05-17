@@ -12,7 +12,7 @@ export class SignalrService {
     public startConnection = () => {
       return new Promise((resolve,reject)=>{
         this.hubConnection = new signalR.HubConnectionBuilder()
-                              .withUrl('https://172.16.16.122/call')
+                              .withUrl('https://localhost:7155/call')
                               .build();
       this.hubConnection
         .start()

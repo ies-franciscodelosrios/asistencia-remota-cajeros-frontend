@@ -25,7 +25,7 @@ export class RemoteComponent implements OnInit {
    * @param username del servidor (suele ser en blanco)
    * @param password del servidor
    */
-  public connect(ip,username,password){
+   public connect(ip,username,password){
     if (window.location.protocol === "https:") {
       this.url = "wss";
     } else {

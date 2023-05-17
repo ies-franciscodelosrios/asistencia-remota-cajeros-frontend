@@ -3,6 +3,45 @@
     <span class="visually-hidden">Loading...</span>
   </div>
 </div>
+<div class=header> 
+  <div class="row">
+    <div class="col-5">
+      <img src="./assets/sepalo_logoWeb.png" alt="Usuario" width="150px" height="70px">
+    </div>
+    <div class="col-7">
+      <div class="row"> 
+        <div class="col-4">
+          <div class="buttons"> 
+            <button type="button" id="logout" class="btn btn-primary" (click)="logout()">Cerrar Sesión</button>
+          </div> 
+        </div>
+        <div class="col-4">
+          <div *ngIf="showHistory" class="buttons"> 
+            <button type="button" id="history" class="btn btn-info" (click)="historyButton()">Historial de Llamadas</button>
+          </div> 
+        </div>
+        <div class="col-1">
+          <div class="d-flex justify-content-center">
+            <span class="ratingFont"> {{note}} </span>
+            <img class="imgSHeader" src="./assets/star.png" alt="Usuario" width="30px" height="30px">
+          </div>
+        </div>
+        <div class="col-2">
+          <div id="ShowUser" class="row align-items-center">
+            <span class="showUserFont"> {{Username}} </span>
+          </div>
+        </div>
+        <div *ngIf="closeHistory" class="col-1" (click)="closeH()">
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-custom">
+              <img src="./assets/cerrar.png" alt="Cerrar accordion" width="30px">
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="row">
     <div class="col-9">
         <div class="col text-center">
@@ -32,8 +71,8 @@
             </div>
         </div>
     </div>
-    <div class="col-3">
-      <div class="div1">
+    <div class="col-3" id="border">
+      <div *ngIf="history" class="div1">
         <div class="accordion" id="accordionExample1">
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
@@ -65,7 +104,7 @@
           </div>
         </div>
       </div>
-      <div class="div2">
+      <div *ngIf="history" class="div2">
         <div class="accordion" id="accordionExample">
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
@@ -86,6 +125,41 @@
                     </div>
                   </li>
                 </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!history" class="div2">
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne2" aria-expanded="true" aria-controls="collapseOne2 ">
+                HISTORIAL DE LLAMADAS
+              </button>
+            </h2>
+            <div id="collapseOne2" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <ul class="list-group">
+                  <div class="row">
+                    <li *ngFor="let Call of this.CallHistory" class="list-group-item">
+                      <span class="callHistory"> Cajero {{Call.cajeroId}} - {{Call.formatted}} </span>
+                      <div id="historyDiv" class="col-2">
+                        <div class="d-flex justify-content-center">
+                          <span class="ratingHistoryFont"> {{Call.rating}} </span>
+                          <img class="imgS" src="./assets/star.png" alt="Usuario" width="30px" height="30px">
+                        </div>
+                      </div>
+                    </li>
+                  </div>
+                </ul>
+              </div>
+            </div>
+            <div *ngIf="noHistory" class="container text-center">
+              <div id="InCallBack" class="row align-items-center"> 
+                <div class="col">
+                  <span class="NoCallFont"> NO HAY HISTORIAL DE LLAMADAS </span>
+                </div>
               </div>
             </div>
           </div>

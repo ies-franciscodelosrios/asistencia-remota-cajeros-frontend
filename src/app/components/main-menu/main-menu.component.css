@@ -174,13 +174,30 @@ td {
     
 }
 
+.callHistory {
+    color: white;
+    font-size: 20px;
+}
+
 #InCallBack {
     background-color: rgba(255, 0, 0, 0.336);
     height: 50px;
     border-radius: 30px;
 }
 
+#ShowUser {
+    background-color: white;
+    height: 30px;
+    border-radius: 30px;
+    margin-top: 7%;
+}
+
 .InCallFont {
+    color: white;
+    font-size: 18px;
+}
+
+.InCallFont2 {
     color: white;
     font-size: 18px;
 }
@@ -191,8 +208,21 @@ td {
     font-weight: bolder;
 }
 
+.showUserFont {
+    color: black;
+    font-size: 20px;
+    font-weight: bolder;
+    text-align: center;
+}
+
 #ButtonInCall {
     border-radius: 30px !important;
+}
+
+#ButtonUser {
+    border-radius: 30px !important;
+    background-color: transparent !important;
+    border: none;
 }
 
 #spinner {
@@ -206,4 +236,78 @@ td {
 
 .button-wrapper {
     cursor: not-allowed;
+}
+
+.header {
+    background-color: rgb(5,72,71);
+    height: 8%;
+}
+
+#border {
+    border-top: black 1px solid;
+}
+
+.headerFont {
+    color: white;
+    font-size: 30px;
+}
+
+.ratingFont {
+    color: white;
+    font-size: 30px;
+    margin-right: 15%;
+}
+
+.ratingHistoryFont {
+    color: white;
+    font-size: 30px;
+    margin-right: 50%;
+}
+
+.col-6 {
+    margin-top: 2px;
+}
+
+#logout {
+    width: 60%;
+    margin-left: 20%;
+}
+
+#history {
+    width: 80%;
+    margin-right: 20%;
+}
+
+.buttons {
+    margin-top: 3%;
+}
+
+.rating {
+    margin-top: 2%;
+}
+
+.justify-content-center {
+    width: 50%;
+}
+
+.btn-custom {
+    background: none;
+    border: none;
+}
+
+#historyDiv {
+    margin-left: 50%;
+}
+
+.imgS {
+    margin-top: 18%;
+}
+
+.imgSHeader {
+    margin-top: 25%;
+}
+
+.user {
+    margin-top: 5%;
+    margin-right: 10%;
 }

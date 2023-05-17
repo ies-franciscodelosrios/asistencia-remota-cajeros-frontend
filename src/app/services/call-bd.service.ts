@@ -40,4 +40,13 @@ export class CallBDService {
   public updateCall(id:Number, Call:Call) : Observable<Call> {
     return this.http.put<Call>(`${environment.serverURL}/api/Call/Update/${id}`, Call);
   }
+
+    /**
+   * 
+   * @returns todas las llamadas de la base de datos que haya atendido un usuario en concreto
+   * @param id del usuario que queremos saber sus llamadas
+   */
+     public getAllCallsByUser(idUser:Number):Observable<Call[]> {
+      return this.http.get<Call[]>(`${environment.serverURL}/api/Call/GetAllByUser/${idUser}`)
+    }
 }

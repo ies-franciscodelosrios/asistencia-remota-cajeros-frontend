@@ -33,11 +33,6 @@ export class LocalStorageService {
    * @param id del usuario que queremos eliminar
    */
   delete(id: any) {
-    const items = this.getUser();
-    const index = items.findIndex((item: any) => item.id === id);
-    if (index !== -1) {
-      items.splice(index, 1);
-      localStorage.setItem(this.storageKey, JSON.stringify(items));
-    }
+    localStorage.removeItem(id);
   }
 }

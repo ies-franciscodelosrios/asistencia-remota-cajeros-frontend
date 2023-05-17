@@ -19,6 +19,7 @@ import { MaximizeDirective } from './directives/maximize.directive';
 import { RemoteComponent } from './components/remote/remote';
 import {HttpClientModule} from '@angular/common/http';
 import { SignalrService } from './services/signalr.service';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { SignalrService } from './services/signalr.service';
   ],
   providers: [
     CallService,
-    SignalrService
+    SignalrService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })
