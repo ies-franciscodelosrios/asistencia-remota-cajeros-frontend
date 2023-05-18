@@ -141,16 +141,17 @@
             <div id="collapseOne2" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
               <div class="accordion-body">
                 <ul class="list-group">
-                  <div class="row">
+                  <div id="rowHistory" class="row">
                     <li *ngFor="let Call of this.displayedItems" class="list-group-item">
-                      <span class="callHistory"> Cajero {{Call.cajeroId}} - {{Call.formatted}} </span>
-                      <img src="./assets/info.png" alt="Usuario" width="30px" height="30px">
-                      <div id="historyDiv" class="col-2">
-                        <div class="d-flex justify-content-center">
-                          <span class="ratingHistoryFont"> {{Call.rating}} </span>
-                          <img class="imgS" src="./assets/star.png" alt="Usuario" width="30px" height="30px">
+                      <div class="container"> 
+                        <div class="containerFont">
+                          <span class="callHistory"> Cajero {{Call.cajeroId}}</span>
+                        </div>
+                        <div class="containerImage"> 
+                          <img (click)="CallInfo(Call)" class="info" src="./assets/info.png" alt="Usuario" width="30px" height="30px" data-bs-toggle="modal" data-bs-target="#modalinfo">
                         </div>
                       </div>
+                      <span class="callHistoryDate"> {{Call.formatted}} </span>
                     </li>
                     <nav class="nav">
                       <ul class="pagination">
@@ -233,6 +234,81 @@
       </div>
       <div class="modal-body">
         <app-remote></app-remote>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal for HistoryInformation -->
+<!-- Modal -->
+<div class="modal fade" id="modalinfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div  id="modalInfoDialog" class="modal-content">
+      <div id="modalInfoHeader" class="modal-header">
+        <div class="containerHeader">
+          <div class="fontContainerHeader">
+            <span class="modalInfoFont"> Información sobre la llamada </span>
+          </div>
+          <button id="close" type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" aria-label="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div id="modalInfo" class="modal-body">
+        <div class="headerDiv">
+          <div class="divImg">
+            <img src="./assets/cashier.png" alt="Cerrar accordion" width="60px">
+          </div>
+          <div class="divFont">
+            <span> Cajero {{cajeroInfoId}} </span>
+          </div>
+          <div class="DivPhone">
+            <img src="./assets/phone.png" alt="Cerrar accordion" width="30px">
+          </div>
+        </div>
+        <div class="bodyDiv">
+          <div class="headerBodyDiv"> 
+            <div class="fontHeaderBody">
+              <span> Información Adicional </span>
+            </div>
+            <div class="imgHeaderBody">
+              <span class="ratingHistoryFont"> {{ratingInfo}} </span>
+              <img src="./assets/star.png" alt="Cerrar accordion" width="30px">
+            </div>
+          </div>
+          <div class="infoBody"> 
+            <div class="headerBodyDiv2"> 
+              <div class="imgHeaderInfoDiv">
+                <img src="./assets/calendar.png" alt="Cerrar accordion" width="25px">
+              </div>
+              <div class="fontHeaderInfoDiv">
+                <span> {{fechaInfo}} </span>
+              </div>
+              <div class="imgHeaderInfoDiv">
+                <img src="./assets/clock.png" alt="Cerrar accordion" width="30px">
+              </div>
+              <div class="fontHeaderInfoDiv2">
+                <span> {{durationInfo}} </span>
+              </div>
+            </div>
+            <div class="headerBodyDiv2"> 
+              <div class="imgHeaderInfoDiv">
+                <img src="./assets/ubication.png" alt="Cerrar accordion" width="20px">
+              </div>
+              <div class="fontHeaderInfoDiv">
+                <span> {{nombreInfo}} </span>
+              </div>
+              <div class="imgHeaderInfoDiv">
+                <img src="./assets/ip.png" alt="Cerrar accordion" width="30px">
+              </div>
+              <div class="fontHeaderInfoDiv2">
+                <span> {{ipInfo}} </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

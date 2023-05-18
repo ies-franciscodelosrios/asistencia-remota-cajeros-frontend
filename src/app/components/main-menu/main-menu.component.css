@@ -176,7 +176,12 @@ td {
 
 .callHistory {
     color: white;
-    font-size: 20px;
+    font-size: 25px;
+}
+
+.callHistoryDate {
+    color: rgb(3, 170, 242);
+    font-size: 16px;
 }
 
 #InCallBack {
@@ -259,9 +264,9 @@ td {
 }
 
 .ratingHistoryFont {
-    color: white;
-    font-size: 30px;
-    margin-right: 50%;
+    font-size: 25px;
+    margin-right: 5%;
+    padding-top: 3%;
 }
 
 .col-6 {
@@ -276,6 +281,10 @@ td {
 #history {
     width: 80%;
     margin-right: 20%;
+}
+
+#Closehistory {
+    width: 80%;
 }
 
 .buttons {
@@ -324,30 +333,190 @@ td {
     justify-content: center;
     list-style: none;
     padding: 0;
-  }
+}
   
-  .page-item {
+.page-item {
     margin-right: 5px;
-  }
+}
   
-  .page-item.disabled .page-link,
-  .page-item.active .page-link {
+.page-item.disabled .page-link,
+.page-item.active .page-link {
     color: #fff;
     background-color: #68829E;
     border-color: #68829E;
-  }
+}
   
-  .page-item .page-link {
+.page-item .page-link {
     color: #68829E;
     background-color: #fff;
     border: 1px solid #68829E;
     padding: 6px 10px;
     border-radius: 20px;
     transition: background-color 0.3s ease;
-  }
+}
   
-  .page-item .page-link:hover {
+.page-item .page-link:hover {
     background-color: #68829E;
     color: #fff;
     text-decoration: none;
+}
+
+#rowHistory {
+    text-align: left;
+}
+
+.container {
+    display: grid;
+    margin: 0;
+    margin-left: -5%;
+    margin-right: -5%;
+}
+
+.containerImage {
+    position: absolute;
+    margin-left: 80%;
+    margin-top: 6%;
+}
+
+.containerFont {
+    margin: 0 !important;
+    text-align: left;
+}
+
+.info {
+    filter: saturate(150%) contrast(80%) brightness(120%) invert(100%) sepia(0%) hue-rotate(180deg);
   }
+
+#modalInfo {
+    height: 400px;
+    background-color: rgb(209, 201, 201);
+}
+
+#modalInfoHeader {
+    height: 50px;
+}
+
+.modalInfoFont {
+    color: white;
+    font-size: 20px;
+    font-weight: bolder;
+    margin-left: 5%;
+}
+
+.headerDiv {
+    background-color: white;
+    height: 100px;
+    border: 1px solid black;
+    display: flex;
+}
+
+.bodyDiv {
+    background-color: white;
+    border: 1px solid black;
+    margin-top: 5%;
+    height: 250px;
+}
+
+.divImg {
+    width: 15%;
+    margin-top: 4%;
+    margin-left: 10%;
+}
+
+.divFont {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    font-weight: bolder;
+    font-size: 20px;
+    width: 60%;
+    border-right: 1px solid black;
+}
+
+.DivPhone {
+    align-items: center;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.headerBodyDiv {
+    height: 60px;
+    width: 100%;
+    border-bottom: 1px solid gray;
+    display: flex;
+}
+
+.headerBodyDiv2 {
+    height: 75px;
+    width: 100%;
+    border-bottom: 1px solid gray;
+    display: flex;
+}
+
+.fontHeaderBody {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    font-weight: bolder;
+    font-size: 20px;
+    width: 80%;
+    padding-left: 5%;
+    color: rgb(11, 171, 22);
+}
+
+.imgHeaderBody {
+    align-items: center;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.infoBody {
+    background-color: rgb(209, 201, 201);
+    border: 1px solid gray;
+    height: 150px;
+    margin-top: 5%;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+.imgHeaderInfoDiv {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 5%;
+    padding-left: 3%;
+}
+
+.fontHeaderInfoDiv {
+    align-items: center;
+    width: 40%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-left: 5%;
+    font-size: 20px;
+}
+
+.fontHeaderInfoDiv2 {
+    align-items: center;
+    width: 20%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-left: 8%;
+    font-size: 20px;
+}
+
+.containerHeader {
+    display: flex;
+    width: 100%;
+}
+
+.fontContainerHeader {
+    width: 90%;
+    display: flex;
+}

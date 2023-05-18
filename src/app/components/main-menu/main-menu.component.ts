@@ -38,6 +38,12 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   id:number = null;
   note:number = 0;
   Username:string = null;
+  cajeroInfoId:number = null;
+  ratingInfo:number = null;
+  fechaInfo:string = null;
+  durationInfo:string = null
+  nombreInfo:string = null;
+  ipInfo:string = null;
   private tooltipList = new Array<any>();
   callStartTime: number;
   callDuration: number;
@@ -275,6 +281,26 @@ export class MainMenuComponent implements OnInit, OnDestroy {
     this.history = true;
     this.closeHistory = false;
     this.showHistory = true;
+  }
+
+  /**
+   * En el historial, boton para ver toda la información acerca de la llamada
+   * @param Call llamada que queremos ver la información
+   */
+  public CallInfo(Call:Call) {
+    const minutos = Math.floor(Call.duration);
+    const segundos = Math.round((Call.duration - minutos) * 60);
+    const tiempoFormateado = `${minutos}' ${segundos}''`;
+    this.cajeroService.getCashier(Call.cajeroId).subscribe(
+      data => {
+        this.nombreInfo = data.ubication;
+        this.ipInfo = data.ip;
+      }
+    )
+    this.cajeroInfoId = Call.cajeroId;
+    this.fechaInfo = Call.formatted;
+    this.durationInfo = tiempoFormateado;
+    this.ratingInfo = Call.rating;
   }
 
   /**
