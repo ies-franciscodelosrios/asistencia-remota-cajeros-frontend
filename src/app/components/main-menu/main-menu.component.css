@@ -334,29 +334,29 @@ td {
     list-style: none;
     padding: 0;
 }
-  
+
 .page-item {
     margin-right: 5px;
 }
-  
+
 .page-item.disabled .page-link,
 .page-item.active .page-link {
     color: #fff;
-    background-color: #68829E;
-    border-color: #68829E;
+    background-color: #0c99f0; /* Color azul claro */
+    border-color: #0c99f0; /* Color azul claro */
 }
-  
+
 .page-item .page-link {
-    color: #68829E;
+    color: #0c99f0; /* Color azul claro */
     background-color: #fff;
-    border: 1px solid #68829E;
+    border: 1px solid #0c99f0; /* Color azul claro */
     padding: 6px 10px;
     border-radius: 20px;
     transition: background-color 0.3s ease;
 }
-  
+
 .page-item .page-link:hover {
-    background-color: #68829E;
+    background-color: #0c99f0; /* Color azul claro */
     color: #fff;
     text-decoration: none;
 }
@@ -385,7 +385,22 @@ td {
 
 .info {
     filter: saturate(150%) contrast(80%) brightness(120%) invert(100%) sepia(0%) hue-rotate(180deg);
-  }
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.info:hover {
+    transform: scale(1.3);
+}
+
+.cerrar {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.cerrar:hover {
+    transform: scale(1.3);
+}
 
 #modalInfo {
     height: 400px;
