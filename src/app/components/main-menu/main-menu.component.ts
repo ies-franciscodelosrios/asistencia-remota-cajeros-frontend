@@ -158,12 +158,6 @@ export class MainMenuComponent implements OnInit, OnDestroy {
     );
     */
     this.remoteVideo.nativeElement.srcObject=undefined;
-
-    // --> codigo para incluir en la página de sergio para poner el tiempo estimado en minutos y segundos junto con el numero de cola
-    //const minutos = Math.floor(this.callDuration);
-    //const segundos = Math.round((this.callDuration - minutos) * 60);
-    //const tiempoFormateado = `${minutos} minuto${minutos !== 1 ? 's' : ''} y ${segundos} segundo${segundos !== 1 ? 's' : ''}`;
-    //console.log(tiempoFormateado);
   }
 
   /**

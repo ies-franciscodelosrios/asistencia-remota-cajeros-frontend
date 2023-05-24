@@ -10,5 +10,5 @@ export interface Call {
     rating?:Rating,
     cajeroId:number,
     userId?:number,
-    formatted:string
+    formatted?:string
 }
