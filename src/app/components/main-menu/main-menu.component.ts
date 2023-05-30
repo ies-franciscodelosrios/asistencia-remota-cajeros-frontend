@@ -13,8 +13,10 @@ import { CajeroService } from 'src/app/services/cajero.service';
 import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
 import { interval } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { Cajero } from 'src/app/model/Cajero';
 
 declare var bootstrap: any;
 

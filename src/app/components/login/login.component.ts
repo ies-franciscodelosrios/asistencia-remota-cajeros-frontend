@@ -4,6 +4,7 @@ import { UserService } from 'src/app/services/user.service';
 import { SHA256 } from 'crypto-js';
 import { User } from 'src/app/model/User';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { HttpClient } from '@angular/common/http';
 
 declare var bootstrap: any;
 
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
   passSign: string = '';
   passRepeat: string = '';
 
-  constructor(private router:Router,private readonly http: UserService, private local:LocalStorageService) { }
+  constructor(private router:Router, private peticion:HttpClient ,private readonly http: UserService, private local:LocalStorageService) { }
 
   async ngOnInit() {
   }
