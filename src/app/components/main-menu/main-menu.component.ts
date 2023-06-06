@@ -82,8 +82,6 @@ export class MainMenuComponent implements OnInit, OnDestroy {
    * Obtiene los permisos para la camara y el audio
    */
   async ngOnInit(): Promise<void> {
-    //const spinner = document.getElementById('spinner');
-    //spinner.style.display = 'block';
     this.note = this.local.getUser().note;
     this.Username = this.local.getUser().username;
     try{
@@ -139,8 +137,8 @@ export class MainMenuComponent implements OnInit, OnDestroy {
    * Destruimos el peer y creamos uno nuevo para la siguiente conexion peer to peer
    */
   public endCall() {
-    //this.callService.destroyPeer();
-    //this.callService.initPeer();
+    this.callService.destroyPeer();
+    this.callService.initPeer();
     this.destroy$.next();
     this.destroy$.complete();
     this.callButton = false;
@@ -148,7 +146,6 @@ export class MainMenuComponent implements OnInit, OnDestroy {
     this.showCall = false;
     this.showLocalVideo = false;
     this.http.callIn.estado = 2;
-    /*
     this.http.callIn.duration = this.callDuration;
     this.http.updateCall(this.http.callIn.id,this.http.callIn).subscribe(
       data => {
@@ -158,7 +155,6 @@ export class MainMenuComponent implements OnInit, OnDestroy {
         console.log(error)
       }
     );
-    */
     this.remoteVideo.nativeElement.srcObject=undefined;
   }
 
@@ -174,7 +170,6 @@ export class MainMenuComponent implements OnInit, OnDestroy {
     const user = this.local.getUser();
     Call.estado = 1;
     Call.userId = user.id;
-    /*
     this.callStartTime = Date.now();
     this.timer$
       .pipe(takeUntil(this.destroy$))
@@ -192,14 +187,11 @@ export class MainMenuComponent implements OnInit, OnDestroy {
         console.log(error)
       }
     );
-    */
     this.showCall = true;
     this.id = Call.cajeroId;
-    /*
     this.callService.establishMediaCall(Call.p2p,()=>{
       this.endCall();
     });
-    */
     this.http.callIn = Call;
     this.CloseAccordion("collapseOne2");
   }
