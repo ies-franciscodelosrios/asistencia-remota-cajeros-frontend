@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as RFB from '@novnc/novnc/core/rfb';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-remote',
@@ -9,7 +10,7 @@ import * as RFB from '@novnc/novnc/core/rfb';
 export class RemoteComponent implements OnInit {
   @ViewChild('windowVNC') window;
   private vnc:any
-  private port = "26901";
+  private port = environment.port;
   private target;
   private path = "";
   public connected = false;

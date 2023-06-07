@@ -113,7 +113,6 @@ export class MainMenuComponent implements OnInit, OnDestroy {
     /*
     this.cajeroService.getCashier(this.http.callIn.cajeroId).subscribe(
       cajero => {
-        console.log(cajero);
         this.videocall.connect(cajero.ip,cajero.username,cajero.password);
       },
       error => {
@@ -121,7 +120,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
       }
     );
     */
-   this.videocall.connect('192.168.10.238','','headless');
+   this.videocall.connect('localhost','','headless');
   }
 
   /**
