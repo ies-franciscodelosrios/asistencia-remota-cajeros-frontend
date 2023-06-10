@@ -59,9 +59,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   localVideo!: ElementRef<HTMLVideoElement>;
   @ViewChild('remoteVideo')
   remoteVideo!: ElementRef<HTMLVideoElement>;
-
   @ViewChild('remoteVideoContainer') container!: ElementRef<HTMLDivElement>;
-  
   @ViewChild(RemoteComponent) videocall:RemoteComponent;
   @ViewChild('mySpan') mySpan: HTMLSpanElement;
 
@@ -110,24 +108,35 @@ export class MainMenuComponent implements OnInit, OnDestroy {
    * Y nos conectamos a la máquina mediante el metodo del servicio
    */
   public vnc(){
-    /*
-    this.cajeroService.getCashier(this.http.callIn.cajeroId).subscribe(
-      cajero => {
-        this.videocall.connect(cajero.ip,cajero.username,cajero.password);
-      },
-      error => {
-        console.log(error);
-      }
-    );
-    */
-   this.videocall.connect('localhost','','headless');
+    try {
+      this.cajeroService.getCashier(this.http.callIn.cajeroId).subscribe(
+        cajero => {
+          this.videocall.connect(cajero.ip,cajero.username,cajero.password);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    } catch(err) {
+      const windowToast = document.getElementById('liveToast3');
+      const toast = new bootstrap.Toast(windowToast);
+      toast.show()
+      console.error(err);
+    }
   }
 
   /**
    * Metodo para cerrar la conexion remota
    */
   public closevnc(){
-    this.videocall.disconnect();
+    try {
+      this.videocall.disconnect();
+    } catch(err) {
+      const windowToast = document.getElementById('liveToast4');
+      const toast = new bootstrap.Toast(windowToast);
+      toast.show()
+      console.error(err);
+    }
   }
 
   /**
@@ -136,25 +145,35 @@ export class MainMenuComponent implements OnInit, OnDestroy {
    * Destruimos el peer y creamos uno nuevo para la siguiente conexion peer to peer
    */
   public endCall() {
-    this.callService.destroyPeer();
-    this.callService.initPeer();
-    this.destroy$.next();
-    this.destroy$.complete();
-    this.callButton = false;
-    this.showButton = false;
-    this.showCall = false;
-    this.showLocalVideo = false;
-    this.http.callIn.estado = 2;
-    this.http.callIn.duration = this.callDuration;
-    this.http.updateCall(this.http.callIn.id,this.http.callIn).subscribe(
-      data => {
-        console.log("EXITO")
-      },
-      error => {
-        console.log(error)
-      }
-    );
-    this.remoteVideo.nativeElement.srcObject=undefined;
+    try {
+      this.callService.destroyPeer();
+      this.callService.initPeer();
+      this.destroy$.next();
+      this.destroy$.complete();
+      this.callButton = false;
+      this.showButton = false;
+      this.showCall = false;
+      this.showLocalVideo = false;
+      this.http.callIn.estado = 2;
+      this.http.callIn.duration = this.callDuration;
+      this.http.updateCall(this.http.callIn.id,this.http.callIn).subscribe(
+        data => {
+          console.log("EXITO")
+        },
+        error => {
+          console.log(error)
+        }
+      );
+      this.remoteVideo.nativeElement.srcObject=undefined;
+      const windowToast = document.getElementById('liveToast5');
+      const toast = new bootstrap.Toast(windowToast);
+      toast.show()
+    } catch(err) {
+      const windowToast = document.getElementById('liveToast6');
+      const toast = new bootstrap.Toast(windowToast);
+      toast.show();
+      console.log(err);
+    }
   }
 
   /**
@@ -163,36 +182,44 @@ export class MainMenuComponent implements OnInit, OnDestroy {
    * @param Call llamada que queremos updatear y guardar para el posterior uso
    */
   public update(Call:Call) {
-    this.callButton = true;
-    this.showLocalVideo = true;
-    this.showButton = true;
-    const user = this.local.getUser();
-    Call.estado = 1;
-    Call.userId = user.id;
-    this.callStartTime = Date.now();
-    this.timer$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        const seconds = Math.floor((Date.now() - this.callStartTime) / 1000);
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = seconds % 60;
-        this.callDuration = parseFloat(`${minutes}.${remainingSeconds}`);
+    try {
+      this.callButton = true;
+      this.showLocalVideo = true;
+      this.showButton = true;
+      const user = this.local.getUser();
+      Call.estado = 1;
+      Call.userId = user.id;
+      this.callStartTime = Date.now();
+      this.timer$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          const seconds = Math.floor((Date.now() - this.callStartTime) / 1000);
+          const minutes = Math.floor(seconds / 60);
+          const remainingSeconds = seconds % 60;
+          this.callDuration = parseFloat(`${minutes}.${remainingSeconds}`);
+        });
+      this.http.updateCall(Call.id, Call).subscribe(
+        data => {
+          console.log("EXITO")
+        },
+        error => {
+          console.log(error)
+        }
+      );
+      this.showCall = true;
+      this.id = Call.cajeroId;
+      this.callService.establishMediaCall(Call.p2p,()=>{
+        this.endCall();
       });
-    this.http.updateCall(Call.id, Call).subscribe(
-      data => {
-        console.log("EXITO")
-      },
-      error => {
-        console.log(error)
-      }
-    );
-    this.showCall = true;
-    this.id = Call.cajeroId;
-    this.callService.establishMediaCall(Call.p2p,()=>{
-      this.endCall();
-    });
-    this.http.callIn = Call;
-    this.CloseAccordion("collapseOne2");
+      this.http.callIn = Call;
+      this.CloseAccordion("collapseOne2");
+    } catch (err) {
+      const windowToast = document.getElementById('liveToast7');
+      const toast = new bootstrap.Toast(windowToast);
+      toast.show();
+      console.log(err);
+    }
+
   }
 
   /**
@@ -200,47 +227,65 @@ export class MainMenuComponent implements OnInit, OnDestroy {
    * hacia el Login
    */
   public logout() {
-    const user = this.local.getUser();
-    this.local.delete(user.id);
-    this.router.navigate(['/login']);
+    try {
+      const user = this.local.getUser();
+      this.local.delete(user.id);
+      this.router.navigate(['/login']);
+      const windowToast = document.getElementById('liveToast8');
+      const toast = new bootstrap.Toast(windowToast);
+      toast.show();
+    } catch(err) {
+      const windowToast = document.getElementById('liveToast9');
+      const toast = new bootstrap.Toast(windowToast);
+      toast.show();
+      console.log(err);
+    }
   }
 
   /**
    * Método para ver el historial de llamadas atendidas por ese usuario junto a su rating
    */
   public historyButton() {
-    const user = this.local.getUser();
-    this.history = false;
-    this.closeHistory = true;
-    this.showHistory = false;
-    this.http.getAllCallsByUser(user.id).subscribe(
-      data => {
-        this.CallHistory = data.map(item => {
-          const fechaFormateada = this.datePipe.transform(item.date, 'dd/MM/yyyy');
-          item.formatted = fechaFormateada
-          return item;
-        });
-      if (data.length == 0) {
-        this.noHistory = true;
-      } else {
-        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-        const endIndex = startIndex + this.itemsPerPage;
-        this.displayedItems = this.CallHistory.slice(startIndex, endIndex);
-      }
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    try {
+      const user = this.local.getUser();
+      this.history = false;
+      this.closeHistory = true;
+      this.showHistory = false;
+      this.http.getAllCallsByUser(user.id).subscribe(
+        data => {
+          this.CallHistory = data.map(item => {
+            const fechaFormateada = this.datePipe.transform(item.date, 'dd/MM/yyyy');
+            item.formatted = fechaFormateada
+            return item;
+          });
+        if (data.length == 0) {
+          this.noHistory = true;
+        } else {
+          const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+          const endIndex = startIndex + this.itemsPerPage;
+          this.displayedItems = this.CallHistory.slice(startIndex, endIndex);
+        }
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    } catch(err) {
+      console.log(err);
+    }
   }
 
   /**
    * Metodo que divide la lista completa para hacer la paginación y mostrar la lista de 4 en 4
    */
   updateDisplayedItems() {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    this.displayedItems = this.CallHistory.slice(startIndex, endIndex);
+    try {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      this.displayedItems = this.CallHistory.slice(startIndex, endIndex);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   /**
@@ -248,8 +293,12 @@ export class MainMenuComponent implements OnInit, OnDestroy {
    * @returns las páginas para mostrarlas en la paginación
    */
   getPages(): number[] {
-    const totalPages = this.getTotalPages();
-    return Array(totalPages).fill(0).map((_, index) => index + 1);
+    try {
+      const totalPages = this.getTotalPages();
+      return Array(totalPages).fill(0).map((_, index) => index + 1);
+    } catch (err) {
+      return err;
+    }
   }
   
   /**
@@ -257,7 +306,11 @@ export class MainMenuComponent implements OnInit, OnDestroy {
    * @returns páginas totales de la lista para ir cambiando y mostrar los siguientes resultados
    */
   getTotalPages(): number {
-    return Math.ceil(this.CallHistory.length / this.itemsPerPage);
+    try {
+      return Math.ceil(this.CallHistory.length / this.itemsPerPage);
+    } catch (err) {
+      return err;
+    }
   }
 
   /**
@@ -265,9 +318,13 @@ export class MainMenuComponent implements OnInit, OnDestroy {
    * a ver la lista de llamadas para atender las solicitudes
    */
   public closeH() {
-    this.history = true;
-    this.closeHistory = false;
-    this.showHistory = true;
+    try {
+      this.history = true;
+      this.closeHistory = false;
+      this.showHistory = true;
+    } catch(err) {
+      console.log(err);
+    }
   }
 
   /**
@@ -275,19 +332,23 @@ export class MainMenuComponent implements OnInit, OnDestroy {
    * @param Call llamada que queremos ver la información
    */
   public CallInfo(Call:Call) {
-    const minutos = Math.floor(Call.duration);
-    const segundos = Math.round((Call.duration - minutos) * 60);
-    const tiempoFormateado = `${minutos}' ${segundos}''`;
-    this.cajeroService.getCashier(Call.cajeroId).subscribe(
-      data => {
-        this.nombreInfo = data.ubication;
-        this.ipInfo = data.ip;
-      }
-    )
-    this.cajeroInfoId = Call.cajeroId;
-    this.fechaInfo = Call.formatted;
-    this.durationInfo = tiempoFormateado;
-    this.ratingInfo = Call.rating;
+    try {
+      const minutos = Math.floor(Call.duration);
+      const segundos = Math.round((Call.duration - minutos) * 60);
+      const tiempoFormateado = `${minutos}' ${segundos}''`;
+      this.cajeroService.getCashier(Call.cajeroId).subscribe(
+        data => {
+          this.nombreInfo = data.ubication;
+          this.ipInfo = data.ip;
+        }
+      )
+      this.cajeroInfoId = Call.cajeroId;
+      this.fechaInfo = Call.formatted;
+      this.durationInfo = tiempoFormateado;
+      this.ratingInfo = Call.rating;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   /**
@@ -295,10 +356,14 @@ export class MainMenuComponent implements OnInit, OnDestroy {
    * @param id del accordion que queremos cerrar
    */
   public CloseAccordion(id:string) {
-    var myCollapse = document.getElementById(id);
-    var bsCollapse = new bootstrap.Collapse(myCollapse, {
-    show: false
-  });
+    try {
+      var myCollapse = document.getElementById(id);
+      var bsCollapse = new bootstrap.Collapse(myCollapse, {
+      show: false
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   /**
@@ -306,9 +371,13 @@ export class MainMenuComponent implements OnInit, OnDestroy {
    * @param id del accordion que queremos abrir
    */
   public ExpandAccordion(id:string) {
-    var myCollapse = document.getElementById(id);
-    var bsCollapse = new bootstrap.Collapse(myCollapse, {
-    show: true
-  });
+    try {
+      var myCollapse = document.getElementById(id);
+      var bsCollapse = new bootstrap.Collapse(myCollapse, {
+      show: true
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

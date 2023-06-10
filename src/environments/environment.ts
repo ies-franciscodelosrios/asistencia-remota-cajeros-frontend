@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   serverURL: 'https://localhost:7155',
-  port: 26901
+  port: 26901,
+  SignalR: 'https://localhost:7155/call'
 };
 
 /*

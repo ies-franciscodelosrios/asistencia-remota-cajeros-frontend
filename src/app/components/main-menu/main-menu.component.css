@@ -535,3 +535,31 @@ td {
     width: 90%;
     display: flex;
 }
+
+#liveToast3 {
+    background-color: rgba(255, 0, 0, 0.562) !important;
+}
+
+#liveToast4 {
+    background-color: rgba(255, 0, 0, 0.562) !important;
+}
+
+#liveToast5 {
+    background-color: green !important;
+}
+
+#liveToast8 {
+    background-color: green !important;
+}
+
+#liveToast6 {
+    background-color: rgba(255, 0, 0, 0.562) !important;
+}
+
+#liveToast7 {
+    background-color: rgba(255, 0, 0, 0.562) !important;
+}
+
+#liveToast9 {
+    background-color: rgba(255, 0, 0, 0.562) !important;
+}

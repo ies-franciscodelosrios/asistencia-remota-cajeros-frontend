@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as signalR from "@microsoft/signalr"
+import { environment } from 'src/environments/environment';
 import { Call } from '../model/Call';
 
 @Injectable({
@@ -12,7 +13,7 @@ export class SignalrService {
     public startConnection = () => {
       return new Promise((resolve,reject)=>{
         this.hubConnection = new signalR.HubConnectionBuilder()
-                              .withUrl('https://localhost:7155/call')
+                              .withUrl(environment.SignalR)
                               .build();
       this.hubConnection
         .start()
